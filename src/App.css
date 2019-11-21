@@ -1,3 +1,41 @@
 .App {
   text-align: center;
 }
+
+.landing-logo {
+  position: absolute;
+  top: 10%;
+  display: inline-block;
+}
+
+.landing-question {
+  position: absolute;
+  top: 10%;
+  left: 40%;
+}
+
+.landing-page-buttons {
+  position: absolute;
+  top: 55%;
+  display: inline-block;
+}
+
+.navigation-container {
+  width: 100%;
+  margin: auto;
+}
+
+.logo {
+  margin-top: 50px;
+  margin-bottom: 25px;
+}
+
+.profile-icon {
+  padding-right: 250px;
+  padding-top: 6px;
+}
+
+.search-icon {
+  padding-left: 250px;
+  padding-top: 6px;
+}
