@@ -39,3 +39,13 @@
   padding-left: 250px;
   padding-top: 6px;
 }
+
+.mainPage {
+  margin: 60px;
+  margin-right: 180px;
+  margin-left: 180px;
+}
+
+.sidebar {
+  clear: both;
+}

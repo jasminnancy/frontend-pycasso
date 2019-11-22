@@ -45,7 +45,7 @@ class SignupForm extends Component {
             .then(r => r.json())
             .then(data => {
                 localStorage.setItem('jwt', data.jwt)
-            }, <Redirect to='/' />)
+            })
         } else {
             alert("passwords don't match")
         }
@@ -54,7 +54,7 @@ class SignupForm extends Component {
     render() {
         return (
             <Container>
-                <Form onSubmit={(e) => this.handleSignup(e, this.state)}>
+                <Form onSubmit={(e) => this.handleSubmit(e, this.state)}>
                     <Form.Group>
                         <Form.Input 
                             id='username'
