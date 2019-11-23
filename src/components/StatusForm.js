@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button } from 'semantic-ui-react'
+import { Form, Button, Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 class StatusForm extends Component {
@@ -27,26 +27,37 @@ class StatusForm extends Component {
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-                user_id: this.props.currentUser[0].id,
+                user_id: this.props.currentUser.user.id,
                 content: values.status
             })
         }, this.setState({
             status: ''
         }))
         .then(r => r.json())
-        .then(console.log)
+        .then(data => this.props.handleStatusUpdate(data, this.props.currentUser))
     }
 
     render() {
         return (
-            <Form onSubmit={(e) => this.handleSubmit(e, this.state)}>
-                    <Form.Input
-                        id='status'
-                        value={this.state.status}
-                        placeholder='Type your status here.'
-                        onChange={(e) => this.changeHandler(e)}
-                    />
-                    <Button type='submit'>Post</Button>
+            <Form 
+                onSubmit={(e) => this.handleSubmit(e, this.state)}
+                style={{marginBottom: 25}}
+            >
+                <Grid>
+                    <Grid.Column width={13}>
+                        <Form.TextArea
+                            id='status'
+                            value={this.state.status}
+                            placeholder='Type your status here.'
+                            maxLength={this.state.limit}
+                            onChange={(e) => this.changeHandler(e)}
+                        />
+                    </Grid.Column>
+                    <Grid.Column verticalAlign='bottom' width={3}>
+                        {250 - this.state.status.length}<br/><br/>
+                        <Button basic inverted type='submit'>Post</Button>
+                    </Grid.Column>
+                </Grid>
             </Form>
         )
     }
@@ -58,4 +69,16 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(StatusForm)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleStatusUpdate: (status, currentUser) => { 
+            currentUser.statuses = [status, ...currentUser.statuses]
+            dispatch({
+                type: 'ADDED_STATUS',
+                payload: currentUser
+            }) 
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(StatusForm)

@@ -8,22 +8,25 @@ const ProfileContainer = (props) => {
         return (
             <div>
                 <FeaturedPhotos /><br/><br/>
-                <StatusFeedContainer user={props.selectedUser}/>
+                <StatusFeedContainer user={props.user}/>
             </div>
         )
-    } else {
+    } else if (window.location.pathname === `/users/${props.selectedUser.username}`) {
         return (
             <div>
                 <FeaturedPhotos /><br/><br/>
                 <StatusFeedContainer user={props.selectedUser}/>
             </div>
         )
+    } else {
+        return null
     }
     
 }
 
 const mapStateToProps = (state) => {
     return {
+        user: state.currentUser.user,
         selectedUser: state.selectedUser
     }
 }

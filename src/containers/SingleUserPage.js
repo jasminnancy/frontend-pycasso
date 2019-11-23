@@ -7,6 +7,7 @@ import ProfileContainer from './ProfileContainer'
 const SingleUserPage = (props) => {
     let username = window.location.pathname.split('/')[2]
     let clickedUser = props.users.filter(user => user.username === username)[0]
+
     if (clickedUser) {
         props.selectedUser(clickedUser)
     }
@@ -18,7 +19,10 @@ const SingleUserPage = (props) => {
                     <ProfileContainer />
                 </Grid.Column>
                 <Grid.Column width={5}>
-                    <Sidebar user={clickedUser}/>
+                    <Sidebar 
+                        user={clickedUser}
+                        currentUser={props.currentUser}
+                    />
                 </Grid.Column>
             </Grid.Row>
         </Grid>
@@ -27,7 +31,8 @@ const SingleUserPage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.users
+        users: state.users,
+        currentUser: state.currentUser.user
     }
 }
 

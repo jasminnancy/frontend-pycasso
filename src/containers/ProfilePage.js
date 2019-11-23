@@ -9,10 +9,18 @@ const ProfilePage = (props) => {
         <Grid>
             <Grid.Row floated='left'>
                 <Grid.Column width={11}>
-                    <ProfileContainer />
+                    <ProfileContainer user={props.user}/>
                 </Grid.Column>
                 <Grid.Column width={5}>
-                    <Sidebar user={props.currentUser}/>
+                    <Sidebar user={
+                        props.user.username 
+                            ? props.user 
+                                : props.user.user }
+                        currentUser={
+                            props.user.username 
+                            ? props.user 
+                                : props.user.user }
+                    />
                 </Grid.Column>
             </Grid.Row>
         </Grid>
@@ -21,8 +29,7 @@ const ProfilePage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.users,
-        currentUser: state.currentUser
+        user: state.currentUser.user
     }
 }
 

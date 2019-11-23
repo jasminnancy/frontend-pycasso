@@ -20,6 +20,12 @@
   display: inline-block;
 }
 
+.landing-page-forms {
+  position: absolute;
+  display: inline-block;
+  top: -450px;
+}
+
 .navigation-container {
   width: 100%;
   margin: auto;

@@ -8,13 +8,13 @@ const StatusFeedContainer = (props) => {
         return (
             <div>
                 <StatusForm />
-                <StatusList />
+                <StatusList user={props.currentUser}/>
             </div>
         )
     } else {
         return (
             <div>
-                <StatusList />
+                <StatusList user={props.user}/>
             </div>
         )
     }
@@ -22,7 +22,7 @@ const StatusFeedContainer = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        currentUser: state.currentUser
+        currentUser: state.currentUser.user
     }
 }
 

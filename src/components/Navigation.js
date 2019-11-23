@@ -25,7 +25,7 @@ const Navigation = () => {
                 </Menu.Item>
                 <Menu.Item
                     name='HOME'
-                    active={window.location.pathname ===  ''}
+                    active={window.location.pathname ===  '/'}
                     onClick={() => window.location.href = "/"}
                 />
                 <Menu.Item
