@@ -52,7 +52,7 @@ const Follow = (props) => {
         let userFix = props.currentUser.user
             ? props.currentUser.user
                 : props.currentUser
-                debugger
+
         return (
             <div>
                 Followers: {followerCount} 

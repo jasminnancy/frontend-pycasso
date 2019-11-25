@@ -9,7 +9,7 @@ import UsersPage from './containers/UsersPage'
 import ProfilePage from './containers/ProfilePage'
 import SingleUsersPage from './containers/SingleUserPage'
 import EditProfilePage from './containers/EditProfilePage'
-import PhotosPage from './containers/PhotosPage'
+import MessagesPage from './containers/MessagesPage'
 
 class App extends Component {
   componentDidMount() {
@@ -80,10 +80,10 @@ class App extends Component {
               ? <Redirect to='/login'/>
                 : <div className='mainPage'><EditProfilePage /></div>}
           </Route>
-          <Route exact strict path='/photos'>
+          <Route exact strict path='/messages'>
             {localStorage.jwt.length < 1
               ? <Redirect to='/login'/>
-                : <div className='mainPage'><PhotosPage /></div>}
+                : <div className='mainPage'><MessagesPage /></div>}
           </Route>
           <Redirect from='*' to='/' />
         </Switch>

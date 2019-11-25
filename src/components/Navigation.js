@@ -3,6 +3,11 @@ import { Container, Image, Icon, Menu } from 'semantic-ui-react'
 import logo from '../photos/logo.png'
 
 const Navigation = () => {
+    const handleLogOut = () => {
+        localStorage.jwt = ''
+        window.location.href = "/login"
+    }
+
     return (
         <Container fluid >
             <Image 
@@ -51,9 +56,11 @@ const Navigation = () => {
                 <Menu.Item>
                     <Icon 
                         inverted 
-                        name='search' 
+                        link
+                        name='log out' 
                         size='big' 
                         className='search-icon' 
+                        onClick={() => handleLogOut()}
                     />
                 </Menu.Item>
             </Menu>

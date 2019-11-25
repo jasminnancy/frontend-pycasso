@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Form, Button } from 'semantic-ui-react'
+import { connect } from 'react-redux'
+import { Form, Button, Header } from 'semantic-ui-react'
 
 class EditProfileForm extends Component {
     constructor() {
@@ -13,6 +14,18 @@ class EditProfileForm extends Component {
             password: '',
             confirmpass: ''
         }
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:3000/verifications', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.jwt}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(r => r.json())
+        .then(data => this.props.getRequests(data))
     }
 
     changeHandler = (e) => {
@@ -44,6 +57,47 @@ class EditProfileForm extends Component {
             .then(r => r.json())
             .then(window.location.href = "/profile")
         }
+    }
+
+    handleVerification = (e, user, verifications) => {
+        e.preventDefault()
+
+        let userVerif = verifications.filter(u => u.user_id === user.id)
+        let pendingRequest = userVerif.filter(v => v.finished === false && v.approved === false)
+
+        if (pendingRequest.length > 0) {
+            alert("Your prior request is still pending.")
+        } else {
+            fetch('http://localhost:3000/verifications', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.jwt}`,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_id: user.id
+                })
+            })
+            .then(r => r.json())
+            .then(console.log)
+        }
+    }
+
+    handleDelete = (user) => {
+        fetch(`http://localhost:3000/${user.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.jwt}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(r => r.json())
+        .then(data => {
+            localStorage.jwt = ''
+            window.location.href = "/login"
+        })
     }
 
     render() {
@@ -91,9 +145,51 @@ class EditProfileForm extends Component {
                     />
                 </Form.Group><br/>    
                 <Button basic type='submit' content='Update'/>
+                <br/><br/>
+                {this.props.currentUser.verified 
+                    ? <Header 
+                        size='small'
+                        floated='left'
+                        color='blue'
+                        content='Congrats! Your account is already verified.'
+                    />
+                        : <Header 
+                            href='#'
+                            size='small'
+                            floated='left'
+                            color='blue'
+                            onClick={(e) => this.handleVerification(e, this.props.currentUser, this.props.verifications)}
+                            content='Request Account Verification'
+                        />}
+                
+                <Header 
+                    href='#'
+                    size='small'
+                    floated='right'
+                    color='blue'
+                    onClick={(e) => this.handleDelete(e, this.props.currentUser)}
+                    content='Delete Account'
+                />
             </Form>
         )
     }
 }
 
-export default EditProfileForm
+const mapStateToProps = (state) => {
+    return {
+        verifications: state.verifications
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getRequests: (verifications) => { 
+            dispatch({
+                type: 'SEND_VERIFICATION_REQUEST',
+                payload: verifications
+            }) 
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfileForm)
