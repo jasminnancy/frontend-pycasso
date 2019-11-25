@@ -1,10 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Image, Card, Icon } from 'semantic-ui-react'
 import FollowButton from './FollowButton'
 
 const Sidebar = (props) => {
     if (props.user && props.currentUser) {
-        let followerCount = props.user.followers.length
 
         return (
             <Card>
@@ -31,12 +31,14 @@ const Sidebar = (props) => {
                         <br/><br/>
                     </Card.Description>
                     <Card.Description>
-                        Followers: {followerCount} 
                         {props.user.id !== props.currentUser.id
                             ? <FollowButton 
                                 currentUser={props.currentUser}
+                                following={props.following}
+                                handleFollow={props.handleFollow}
+                                handleUnfollow={props.handleUnfollow}
                                 user={props.user} />
-                                : null }
+                                : <a href='/profile/edit'>Edit Profile</a> }
                     </Card.Description>
                 </Card.Content>
                 <Card.Content>
@@ -46,7 +48,7 @@ const Sidebar = (props) => {
                 </Card.Content>
                 <Card.Content>
                     <Card.Meta textAlign='left'>
-                        
+                        {/* ?????? */}
                     </Card.Meta>
                 </Card.Content>
             </Card>
@@ -56,4 +58,31 @@ const Sidebar = (props) => {
     }
 }
 
-export default Sidebar
+const mapStateToProps = (state) => {
+    return {
+        currentUser: state.currentUser.user,
+        following: state.currentUser.following
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleFollow: (user, currentUser) => { 
+            currentUser.following = [...currentUser.following, user]
+            dispatch({
+                type: 'FOLLOW',
+                payload: currentUser
+            })
+        },
+        handleUnfollow: (user, currentUser) => {
+            currentUser.following = [...currentUser.following.filter(u => u.id !== user.message)]
+            dispatch({
+                type: 'UNFOLLOW',
+                payload: currentUser
+            })
+        }
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

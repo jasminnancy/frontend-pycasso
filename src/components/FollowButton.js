@@ -4,22 +4,27 @@ import { Button } from 'semantic-ui-react'
 const FollowButton = (props) => {
     let user = props.user
     let currentUser = props.currentUser
+
     return (
         <div>
             {currentUser.following.filter(u => u.id === user.id).length < 1
                 ?  <Follow 
                         user={user} 
                         currentUser={currentUser} 
+                        handleFollow={props.handleFollow}
                     />
                     :  <Unfollow 
                             user={user} 
                             currentUser={currentUser} 
+                            handleUnfollow={props.handleUnfollow}
                         />}
         </div>
     )
 }
 
 const Follow = (props) => {
+    let followerCount = props.user.followers.length
+
     const followFetch = () => {
         fetch('http://localhost:3000/follows', {
             method: 'POST',
@@ -34,16 +39,19 @@ const Follow = (props) => {
             })
         })
         .then(r => r.json())
-        .then(console.log)
+        .then(data => {
+            props.handleFollow(props.user, props.currentUser)
+        })
     }
 
     if (props.user && props.currentUser) {
         return (
             <div>
+                Followers: {followerCount} 
                 <br/><br/>
                 <Button onClick={followFetch} content='Follow' />
                 <br/><br/>
-                {props.currentUser.following.filter(user => user.id === props.currentUser.id).length > 0 
+                {props.currentUser.followers.filter(user => user.id === props.currentUser.id).length > 0 
                         ? `(${props.user.username} follows you!)`
                             : null }
             </div>
@@ -54,6 +62,8 @@ const Follow = (props) => {
 }
 
 const Unfollow = (props) => {
+    let followerCount = props.user.followers.length
+
     const unfollowFetch = () => {
         fetch('http://localhost:3000/find', {
             method: 'POST',
@@ -68,16 +78,19 @@ const Unfollow = (props) => {
             })
         })
         .then(r => r.json())
-        .then(console.log)
+        .then(data => {
+            props.handleUnfollow(data, props.currentUser)
+        })
     }
 
     if (props.user && props.currentUser) {
         return (
             <div>
+                Followers: {followerCount} 
                 <br/><br/>
                 <Button onClick={unfollowFetch} content='Unfollow' />
                 <br/><br/>
-                {props.currentUser.following.filter(user => user.id === props.currentUser.id).length > 0 
+                {props.currentUser.followers.filter(user => user.id === props.currentUser.id).length > 0 
                         ? `(You're mutual followers!)`
                             : null }
             </div>

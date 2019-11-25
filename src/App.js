@@ -8,6 +8,7 @@ import HomePage from './containers/HomePage'
 import UsersPage from './containers/UsersPage'
 import ProfilePage from './containers/ProfilePage'
 import SingleUsersPage from './containers/SingleUserPage'
+import EditProfilePage from './containers/EditProfilePage'
 
 class App extends Component {
   componentDidMount() {
@@ -47,31 +48,38 @@ class App extends Component {
           ? <Navigation /> 
             : null }
         <Switch>
-          <Route exact path='/login'>
-            {localStorage.jwt.length > 0 
-            ? <Redirect to='/' />
-              : <LoginPage />}
-          </Route>
-
-          <Route exact path='/users'>
-            <div className='mainPage'><UsersPage /></div>
-          </Route>
-
-          <Route path='/users/:username'>
-              <div className='mainPage'><SingleUsersPage/></div>
-          </Route>
-
           <Route exact path='/'>
             {localStorage.jwt.length < 1 
               ? <Redirect to='/login' /> 
                 : <div className='mainPage'><HomePage /></div>}
           </Route>
 
-          <Route exact path='/profile'>
+          <Route exact path='/login'>
+            {localStorage.jwt.length > 0 
+            ? <Redirect to='/' />
+              : <LoginPage />}
+          </Route>
+
+          <Route exact strict path='/users'>
+            <div className='mainPage'><UsersPage /></div>
+          </Route>
+
+          <Route exact strict path='/users/:username'>
+              <div className='mainPage'><SingleUsersPage/></div>
+          </Route>
+
+          <Route exact strict path='/profile'>
             {localStorage.jwt.length < 1
               ? <Redirect to='/login' />
                 : <div className='mainPage'><ProfilePage /></div>}
           </Route>
+
+          <Route exact strict path='/profile/edit'>
+              {localStorage.jwt.length < 1
+                ? <Redirect to='/login'/>
+                  : <div className='mainPage'><EditProfilePage /></div>}
+          </Route>
+          <Redirect from='*' to='/' />
         </Switch>
       </div>
     )

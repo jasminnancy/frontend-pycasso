@@ -4,7 +4,8 @@ let initialState = {
     users: [],
     currentUser: {
         user: [],
-        statuses: []
+        statuses: [],
+        following: []
     },
     searchQuery: {
         input: '',
@@ -52,6 +53,18 @@ let currentUserReducer = (state=initialState.currentUser, action) => {
                 statuses: action.payload.statuses.reverse(),
                 following: action.payload.following
             }
+        case 'FOLLOW':
+            return {
+                user: action.payload,
+                statuses: action.payload.statuses,
+                following: action.payload.following
+            }
+        case 'UNFOLLOW':
+                return {
+                    user: action.payload,
+                    statuses: action.payload.statuses,
+                    following: action.payload.following
+                }
         default:
             return state
     }

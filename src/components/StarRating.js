@@ -14,7 +14,6 @@ export default class RatingExampleOnRate extends Component {
     this.setState({ 
       rating 
     })
-    debugger
   }
 
   render() {
