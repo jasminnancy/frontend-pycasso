@@ -14,8 +14,9 @@ const ProfileCard = (props) => {
                             content={props.user.username} 
                         />
                         <Card.Meta>
-                            {props.user.user_type}<br/><br/>
-                            {props.user.rating ? props.user.rating : 'Unrated'}
+                            {props.user.user_type} | {props.user.rating 
+                                ? props.user.rating + '/5' 
+                                    : 'Unrated'}
                         </Card.Meta>
                     </Card.Content>
                 </Link>

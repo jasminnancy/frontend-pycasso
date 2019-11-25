@@ -60,11 +60,11 @@ let currentUserReducer = (state=initialState.currentUser, action) => {
                 following: action.payload.following
             }
         case 'UNFOLLOW':
-                return {
-                    user: action.payload,
-                    statuses: action.payload.statuses,
-                    following: action.payload.following
-                }
+            return {
+                user: action.payload,
+                statuses: action.payload.statuses,
+                following: action.payload.following
+            }
         default:
             return state
     }

@@ -5,9 +5,11 @@ import EditProfileForm from '../components/EditProfileForm'
 
 const EditProfilePage = (props) => {
     return (
-        <Segment tertiary>
+        <Segment tertiary padded='very'>
             <Header content='Edit Profile' /><br/>
-                <EditProfileForm currentUser={props.currentUser}/>
+                <Segment padded='very'>
+                    <EditProfileForm currentUser={props.currentUser}/>
+                </Segment>
         </Segment>
     )
 }

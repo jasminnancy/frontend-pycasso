@@ -5,21 +5,25 @@ const FollowButton = (props) => {
     let user = props.user
     let currentUser = props.currentUser
 
-    return (
-        <div>
-            {currentUser.following.filter(u => u.id === user.id).length < 1
-                ?  <Follow 
-                        user={user} 
-                        currentUser={currentUser} 
-                        handleFollow={props.handleFollow}
-                    />
-                    :  <Unfollow 
+    if (user && currentUser) {
+        return (
+            <div>
+                {currentUser.following.filter(u => u.id === user.id).length < 1
+                    ?  <Follow 
                             user={user} 
                             currentUser={currentUser} 
-                            handleUnfollow={props.handleUnfollow}
-                        />}
-        </div>
-    )
+                            handleFollow={props.handleFollow}
+                        />
+                        :  <Unfollow 
+                                user={user} 
+                                currentUser={currentUser} 
+                                handleUnfollow={props.handleUnfollow}
+                            />}
+            </div>
+        )
+    } else {
+        return null
+    }
 }
 
 const Follow = (props) => {
@@ -45,13 +49,17 @@ const Follow = (props) => {
     }
 
     if (props.user && props.currentUser) {
+        let userFix = props.currentUser.user
+            ? props.currentUser.user
+                : props.currentUser
+                debugger
         return (
             <div>
                 Followers: {followerCount} 
                 <br/><br/>
                 <Button onClick={followFetch} content='Follow' />
                 <br/><br/>
-                {props.currentUser.followers.filter(user => user.id === props.currentUser.id).length > 0 
+                {userFix.followers.filter(user => user.id === userFix.id).length > 0 
                         ? `(${props.user.username} follows you!)`
                             : null }
             </div>
