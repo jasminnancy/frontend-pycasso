@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Button, Form } from 'semantic-ui-react'
+import { Button, Form, Segment } from 'semantic-ui-react'
 
 class LoginForm extends Component {
     constructor() {
@@ -35,6 +35,10 @@ class LoginForm extends Component {
         .then(data => {
             if (data.user){
                 localStorage.setItem('jwt', data.jwt)
+                this.setState({
+                    ...this.state,
+                    user: true
+                })
             } else {
                 alert('Invalid Username or Password')
             }
@@ -42,29 +46,39 @@ class LoginForm extends Component {
     }
 
     render() {
-        return (
-            <Container>
-                <Form onSubmit={(e) => this.handleLogin(e, this.state)}>
-                    <Form.Group>
-                        <Form.Input 
-                            id='username'
-                            type='text' 
-                            placeholder='Username'
-                            value={this.state.username}
-                            onChange={(e) => this.changeHandler(e)}
-                        />
-                        <Form.Input 
-                            id='password'
-                            type='password' 
-                            placeholder='Password'
-                            value={this.state.password}
-                            onChange={(e) => this.changeHandler(e)}
-                        />
-                        <Button type='submit'>Sign In</Button>
-                    </Form.Group>
-                </Form>
-            </Container>
-        )
+        if (this.state.user) {
+            return window.location.href = "/"
+        } else {
+            return (
+                <Segment padded='very' className='landing-page-forms'>
+                    <Form onSubmit={(e) => this.handleLogin(e, this.state)}>
+                        <Form.Group>
+                            <Form.Input 
+                                id='username'
+                                label='Username'
+                                type='text' 
+                                placeholder='Username'
+                                value={this.state.username}
+                                onChange={(e) => this.changeHandler(e)}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Input 
+                                id='password'
+                                label='Password'
+                                type='password' 
+                                placeholder='Password'
+                                value={this.state.password}
+                                onChange={(e) => this.changeHandler(e)}
+                            />
+                        </Form.Group><br/>
+                        <Form.Group >
+                            <Button fluid type='submit'>Sign In</Button>
+                        </Form.Group>
+                    </Form>
+                </Segment>
+            )
+        }
     }
 }
 

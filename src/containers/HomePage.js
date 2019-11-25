@@ -1,15 +1,12 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
-const HomePage = () => {
-    if (localStorage.jwt.length < 1) {
-        return <Redirect to='/login' />
-    } else {
-        return (
-            <div>
-                Home Page
-            </div>
-        )
-    }
+// import Searchbar from '../components/Searchbar'
+
+const HomePage = (props) => {
+    return (
+        <div>
+            Home Page
+        </div>
+    )
 }
 
 export default HomePage

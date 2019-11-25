@@ -20,6 +20,12 @@
   display: inline-block;
 }
 
+.landing-page-forms {
+  position: absolute;
+  display: inline-block;
+  top: -450px;
+}
+
 .navigation-container {
   width: 100%;
   margin: auto;
@@ -38,4 +44,14 @@
 .search-icon {
   padding-left: 250px;
   padding-top: 6px;
+}
+
+.mainPage {
+  margin: 60px;
+  margin-right: 180px;
+  margin-left: 180px;
+}
+
+.sidebar {
+  clear: both;
 }

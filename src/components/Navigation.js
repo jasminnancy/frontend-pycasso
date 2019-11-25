@@ -25,13 +25,13 @@ const Navigation = () => {
                 </Menu.Item>
                 <Menu.Item
                     name='HOME'
-                    active={window.location.pathname === '/'}
+                    active={window.location.pathname ===  '/'}
                     onClick={() => window.location.href = "/"}
                 />
                 <Menu.Item
                     name='GLOBAL'
-                    active={window.location.pathname === '/global'}
-                    onClick={() => window.location.href = "/global"}
+                    active={window.location.pathname === '/users'}
+                    onClick={() => window.location.href = "/users"}
                 />
                 <Menu.Item
                     name='CLOSE FRIENDS'
