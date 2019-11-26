@@ -9,6 +9,7 @@ import UsersPage from './containers/UsersPage'
 import ProfilePage from './containers/ProfilePage'
 import SingleUsersPage from './containers/SingleUserPage'
 import EditProfilePage from './containers/EditProfilePage'
+import MessagesPage from './containers/MessagesPage'
 
 class App extends Component {
   componentDidMount() {
@@ -65,7 +66,7 @@ class App extends Component {
           </Route>
 
           <Route exact strict path='/users/:username'>
-              <div className='mainPage'><SingleUsersPage/></div>
+            <div className='mainPage'><SingleUsersPage/></div>
           </Route>
 
           <Route exact strict path='/profile'>
@@ -75,9 +76,14 @@ class App extends Component {
           </Route>
 
           <Route exact strict path='/profile/edit'>
-              {localStorage.jwt.length < 1
-                ? <Redirect to='/login'/>
-                  : <div className='mainPage'><EditProfilePage /></div>}
+            {localStorage.jwt.length < 1
+              ? <Redirect to='/login'/>
+                : <div className='mainPage'><EditProfilePage /></div>}
+          </Route>
+          <Route exact strict path='/messages'>
+            {localStorage.jwt.length < 1
+              ? <Redirect to='/login'/>
+                : <div className='mainPage'><MessagesPage /></div>}
           </Route>
           <Redirect from='*' to='/' />
         </Switch>

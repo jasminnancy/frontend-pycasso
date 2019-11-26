@@ -5,6 +5,11 @@ import FollowButton from './FollowButton'
 
 const Sidebar = (props) => {
     if (props.user && props.currentUser) {
+        
+        //fixes issues with user/currentUser when re-rendering
+        let userFix = props.currentUser.user
+            ? props.currentUser.user
+                : props.currentUser
 
         return (
             <Card>
@@ -31,9 +36,9 @@ const Sidebar = (props) => {
                         <br/><br/>
                     </Card.Description>
                     <Card.Description>
-                        {props.user.id !== props.currentUser.id
+                        {props.user.id !== userFix.id
                             ? <FollowButton 
-                                currentUser={props.currentUser}
+                                currentUser={userFix}
                                 following={props.following}
                                 handleFollow={props.handleFollow}
                                 handleUnfollow={props.handleUnfollow}
