@@ -85,7 +85,7 @@ class EditProfileForm extends Component {
     }
 
     handleDelete = (user) => {
-        fetch(`http://localhost:3000/${user.id}`, {
+        fetch(`http://localhost:3000/users/${user.id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,
@@ -167,7 +167,7 @@ class EditProfileForm extends Component {
                     size='small'
                     floated='right'
                     color='blue'
-                    onClick={(e) => this.handleDelete(e, this.props.currentUser)}
+                    onClick={() => this.handleDelete(this.props.currentUser)}
                     content='Delete Account'
                 />
             </Form>
