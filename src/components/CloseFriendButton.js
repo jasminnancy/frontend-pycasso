@@ -1,10 +1,13 @@
 import React from 'react'
 import { Button } from 'semantic-ui-react'
 
+// A button to add a user as a close friend
+// Conditionally renders whether you're close friends already or not
 const CloseFriendButton = (props) => {
     let user = props.user
     let currentUser = props.currentUser
 
+    // checks to make sure that all props have been passed
     if (user && currentUser) {
         return (
             <div>
@@ -26,6 +29,7 @@ const CloseFriendButton = (props) => {
     }
 }
 
+// Add friend button
 const AddFriend = (props) => {
     const addFriendFetch = () => {
         fetch('http://localhost:3000//close_friends', {
@@ -60,6 +64,7 @@ const AddFriend = (props) => {
     }
 }
 
+// remove friend button
 const RemoveFriend = (props) => {
     const removeFriendFetch = () => {
         fetch('http://localhost:3000/remove', {

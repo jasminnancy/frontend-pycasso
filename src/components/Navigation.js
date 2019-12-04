@@ -9,13 +9,17 @@ const Navigation = (props) => {
         window.location.href = "/login"
     }
 
-    if (props.currentUser.user.username) {
+    if (props.currentUser.user.length !== 0) {
+        let userFix = props.currentUser.user.username
+        ? props.currentUser.user
+            : props.currentUser.user.user
+
         let unread
 
         if (props.conversations.length > 0) {
             props.conversations.map(convo => 
                 unread = convo.messages.filter(message => 
-                    message.user_id !== props.currentUser.user.id 
+                    message.user_id !== userFix.id 
                         && message.read === false)
             )
         }
@@ -57,7 +61,7 @@ const Navigation = (props) => {
                         onClick={() => window.location.href = "/closefriends"}
                     />
                     <Menu.Item
-                        name='PHOTOS'
+                        name='PORTFOLIO'
                         active={window.location.pathname === '/photos'}
                         onClick={() => window.location.href = "/photos"}
                     />

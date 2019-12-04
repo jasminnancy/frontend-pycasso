@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Modal, Button, Form, Rating } from 'semantic-ui-react'
 
+//This modal (pop-up) adds a review to a single user
 class AddReviewModal extends Component {
     constructor() {
         super()
@@ -13,12 +14,14 @@ class AddReviewModal extends Component {
         }
     }
 
+    // content === body of the review
     handleChange = (e) => {
         this.setState({
             content: e.target.value
         })
     }
 
+    // handles the 1-5 star rating and sets state
     handleRate = (e, { rating }) => {
         let user_id = this.props.currentUser.id
         let reviewed_id = this.props.user.id
@@ -30,6 +33,8 @@ class AddReviewModal extends Component {
         })
     }
 
+    // posts the rating to the backend
+    // makes sure that a rating is selected before sending the post request
     handleSubmit = (e, values) => {
         e.preventDefault()
 

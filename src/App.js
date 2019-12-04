@@ -10,6 +10,7 @@ import ProfilePage from './containers/ProfilePage'
 import SingleUsersPage from './containers/SingleUserPage'
 import EditProfilePage from './containers/EditProfilePage'
 import CloseFriendsPage from './containers/CloseFriendsPage'
+import PhotosPage from './containers/PhotosPage'
 import MessagesPage from './containers/MessagesPage'
 
 class App extends Component {
@@ -37,6 +38,18 @@ class App extends Component {
       .then(response => response.json())
       .then(data => {
         this.props.getUsers(data)
+      })
+
+      fetch('http://localhost:3000/reviews', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.jwt}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        this.props.getReviews(data)
       })
     } else {
       localStorage.clear()
@@ -102,6 +115,11 @@ class App extends Component {
               ? <Redirect to='/login' />
                 : <div className='mainPage'><CloseFriendsPage /></div>}
           </Route>
+          <Route exact strict path='/photos'>
+            {!localStorage.jwt
+              ? <Redirect to='/login' />
+                : <div className='mainPage'><PhotosPage /></div>}
+          </Route>
           <Route exact strict path='/messages'>
             {!localStorage.jwt
               ? <Redirect to='/login'/>
@@ -138,6 +156,12 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({
         type: 'GET_CONVOS',
         payload: convos
+      })
+    },
+    getReviews: (reviews) => {
+      dispatch({
+        type: 'GET_REVIEWS',
+        payload: reviews
       })
     }
   }

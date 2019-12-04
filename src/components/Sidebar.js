@@ -5,6 +5,7 @@ import FollowButton from './FollowButton'
 import CloseFriendButton from './CloseFriendButton'
 import Review from './Review'
 import AddReviewModal from './AddReviewModal'
+import profilePic from '../photos/profilePic.png'
 
 const Sidebar = (props) => {
     if (props.user && props.currentUser && props.conversations) {
@@ -24,7 +25,9 @@ const Sidebar = (props) => {
                 <Image 
                     size='medium' 
                     rounded 
-                    src='https://react.semantic-ui.com/images/avatar/large/matthew.png' 
+                    src={props.user.profile_pic
+                        ? props.user.profile_pic
+                            : profilePic} 
                 />
                 <Card.Content >
                     <Card.Header> 
