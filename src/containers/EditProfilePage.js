@@ -1,12 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Segment, Header } from 'semantic-ui-react'
+import { Segment, Header, Button } from 'semantic-ui-react'
 import EditProfileForm from '../components/EditProfileForm'
 
 const EditProfilePage = (props) => {
     return (
         <Segment tertiary padded='very'>
-            <Header content='Edit Profile' /><br/>
+            <Header as='h1'>
+                <Button 
+                        basic 
+                        floated='left' 
+                        content='Back to Profile' 
+                        onClick={() => window.location.href='/profile'}
+                    />
+                <div style={{marginRight: 140}}>Edit Profile</div> 
+            </Header><br/>
                 <Segment padded='very'>
                     <EditProfileForm currentUser={props.currentUser}/>
                 </Segment>
