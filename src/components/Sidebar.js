@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Image, Card, Icon, Modal, Button, Rating } from 'semantic-ui-react'
 import FollowButton from './FollowButton'
+import CloseFriendButton from './CloseFriendButton'
 import Review from './Review'
 import AddReviewModal from './AddReviewModal'
 
@@ -16,7 +17,8 @@ const Sidebar = (props) => {
             convo.first_user_id === props.user.id 
                 || convo.second_user_id === props.user.id)
 
-                console.log(props)
+        let reviews = props.user.reviews.filter(review => 
+            review.user_id === props.currentUser.id)
         return (
             <Card>
                 <Image 
@@ -54,6 +56,16 @@ const Sidebar = (props) => {
                                 : "This user hasn't written a bio yet."}
                     </Card.Description>
                 </Card.Content>
+                {conversations.length > 0 && reviews.length > 0
+                    ? <Card.Content>
+                        <CloseFriendButton 
+                            currentUser={userFix}
+                            user={props.user}
+                            handleFriend={props.handleFriend}
+                            handleUnfriend={props.handleUnfriend}
+                        />
+                    </Card.Content>
+                        : null}
                 <Card.Content style={{color: 'black'}}>
                     {props.user.rating
                         ? <Rating 
@@ -123,8 +135,21 @@ const mapDispatchToProps = (dispatch) => {
 
             let number = parseInt(document.querySelector('#followerCount').innerText.split(' ')[1]) - 1
             document.querySelector('#followerCount').innerText = `Followers: ${number}`
+        },
+        handleFriend: (user, currentUser) => {
+            currentUser.close_friends = [...currentUser.close_friends, user]
+            dispatch({
+                type: 'FRIEND',
+                payload: currentUser
+            })
+        },
+        handleUnfriend: (user, currentUser) => {
+            currentUser.close_friends = [...currentUser.close_friends.filter(u => u.id !== user.message)]
+            dispatch({
+                type: 'UNFRIEND',
+                payload: currentUser
+            })
         }
-
     }
 }
 

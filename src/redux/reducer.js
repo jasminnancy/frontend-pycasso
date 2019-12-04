@@ -6,7 +6,8 @@ let initialState = {
         user: [],
         statuses: [],
         following: [],
-        reviews: []
+        reviews: [],
+        closeFriends: []
     },
     searchQuery: {
         input: '',
@@ -49,35 +50,56 @@ let currentUserReducer = (state=initialState.currentUser, action) => {
                 user: action.payload,
                 statuses: action.payload.statuses,
                 following: action.payload.following,
-                reviews: action.payload.reviews
+                reviews: action.payload.reviews,
+                close_friends: action.payload.close_friends
             }
         case 'ADDED_STATUS':
             return {
                 user: action.payload,
                 statuses: action.payload.statuses.reverse(),
                 following: action.payload.following,
-                reviews: action.payload.reviews
+                reviews: action.payload.reviews,
+                close_friends: action.payload.close_friends
             }
         case 'DELETED_STATUS':
             return {
                 user: action.payload,
                 statuses: action.payload.statuses.reverse(),
                 following: action.payload.following,
-                reviews: action.payload.reviews
+                reviews: action.payload.reviews,
+                close_friends: action.payload.close_friends
             }
         case 'FOLLOW':
             return {
                 user: action.payload,
                 statuses: action.payload.statuses,
                 following: action.payload.following,
-                reviews: action.payload.reviews
+                reviews: action.payload.reviews,
+                close_friends: action.payload.close_friends
             }
         case 'UNFOLLOW':
             return {
                 user: action.payload,
                 statuses: action.payload.statuses,
                 following: action.payload.following,
-                reviews: action.payload.reviews
+                reviews: action.payload.reviews,
+                close_friends: action.payload.close_friends
+            }
+        case 'FRIEND':
+            return {
+                user: action.payload,
+                statuses: action.payload.statuses,
+                following: action.payload.following,
+                reviews: action.payload.reviews,
+                close_friends: action.payload.close_friends
+            }
+        case 'UNFRIEND':
+            return {
+                user: action.payload,
+                statuses: action.payload.statuses,
+                following: action.payload.following,
+                reviews: action.payload.reviews,
+                close_friends: action.payload.close_friends
             }
         default:
             return state
