@@ -9,11 +9,12 @@ import UsersPage from './containers/UsersPage'
 import ProfilePage from './containers/ProfilePage'
 import SingleUsersPage from './containers/SingleUserPage'
 import EditProfilePage from './containers/EditProfilePage'
+import CloseFriendsPage from './containers/CloseFriendsPage'
 import MessagesPage from './containers/MessagesPage'
 
 class App extends Component {
   componentDidMount() {
-    if (localStorage.jwt.length > 0) {
+    if (localStorage.jwt) {
       fetch('http://localhost:3000/profile', {
         headers: {
             'Authorization': `Bearer ${localStorage.jwt}`,
@@ -38,25 +39,41 @@ class App extends Component {
         this.props.getUsers(data)
       })
     } else {
-      localStorage.setItem('jwt', '')
+      localStorage.clear()
     }
   }
 
   render() {
+    if (this.props.currentUser.user.username) {
+      fetch('http://localhost:3000/getConvos', {
+          method: 'POST',
+          headers: {
+              'Authorization': `Bearer ${localStorage.jwt}`,
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+          },
+          body: JSON.stringify({id: this.props.currentUser.user.id})
+      })
+      .then(r => r.json())
+      .then(data => {
+          this.props.getConvos(data)
+      })
+    }
+
     return (
       <div className="App">
-        {localStorage.jwt.length > 0 
+        {localStorage.jwt
           ? <Navigation /> 
             : null }
         <Switch>
           <Route exact path='/'>
-            {localStorage.jwt.length < 1 
+            {!localStorage.jwt
               ? <Redirect to='/login' /> 
                 : <div className='mainPage'><HomePage /></div>}
           </Route>
 
           <Route exact path='/login'>
-            {localStorage.jwt.length > 0 
+            {localStorage.jwt
             ? <Redirect to='/' />
               : <LoginPage />}
           </Route>
@@ -70,18 +87,23 @@ class App extends Component {
           </Route>
 
           <Route exact strict path='/profile'>
-            {localStorage.jwt.length < 1
+            {!localStorage.jwt
               ? <Redirect to='/login' />
                 : <div className='mainPage'><ProfilePage /></div>}
           </Route>
 
           <Route exact strict path='/profile/edit'>
-            {localStorage.jwt.length < 1
-              ? <Redirect to='/login'/>
+            {!localStorage.jwt
+              ? <Redirect to='/login' />
                 : <div className='mainPage'><EditProfilePage /></div>}
           </Route>
+          <Route exact strict path='/closefriends'>
+            {!localStorage.jwt
+              ? <Redirect to='/login' />
+                : <div className='mainPage'><CloseFriendsPage /></div>}
+          </Route>
           <Route exact strict path='/messages'>
-            {localStorage.jwt.length < 1
+            {!localStorage.jwt
               ? <Redirect to='/login'/>
                 : <div className='mainPage'><MessagesPage /></div>}
           </Route>
@@ -89,6 +111,12 @@ class App extends Component {
         </Switch>
       </div>
     )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.currentUser
   }
 }
 
@@ -105,8 +133,14 @@ const mapDispatchToProps = (dispatch) => {
         type: 'ADD_USERS',
         payload: users
       })
+    },
+    getConvos: (convos) => {
+      dispatch({
+        type: 'GET_CONVOS',
+        payload: convos
+      })
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

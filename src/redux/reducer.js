@@ -6,15 +6,15 @@ let initialState = {
         user: [],
         statuses: [],
         following: [],
-        messages: [],
-        sent_messages: []
+        reviews: []
     },
     searchQuery: {
         input: '',
         results: []
     },
     selectedUser: [],
-    verifications: []
+    verifications: [],
+    conversations: []
 }
 
 let usersReducer = (state=initialState.users, action) => {
@@ -49,40 +49,35 @@ let currentUserReducer = (state=initialState.currentUser, action) => {
                 user: action.payload,
                 statuses: action.payload.statuses,
                 following: action.payload.following,
-                messages: action.payload.messages,
-                sent_messages: action.payload.sent_messages
+                reviews: action.payload.reviews
             }
         case 'ADDED_STATUS':
             return {
                 user: action.payload,
                 statuses: action.payload.statuses.reverse(),
                 following: action.payload.following,
-                messages: action.payload.messages,
-                sent_messages: action.payload.sent_messages
+                reviews: action.payload.reviews
+            }
+        case 'DELETED_STATUS':
+            return {
+                user: action.payload,
+                statuses: action.payload.statuses.reverse(),
+                following: action.payload.following,
+                reviews: action.payload.reviews
             }
         case 'FOLLOW':
             return {
                 user: action.payload,
                 statuses: action.payload.statuses,
                 following: action.payload.following,
-                messages: action.payload.messages,
-                sent_messages: action.payload.sent_messages
+                reviews: action.payload.reviews
             }
         case 'UNFOLLOW':
             return {
                 user: action.payload,
                 statuses: action.payload.statuses,
                 following: action.payload.following,
-                messages: action.payload.messages,
-                sent_messages: action.payload.sent_messages
-            }
-        case 'SENT_MESSAGE':
-            return {
-                user: action.payload,
-                statuses: action.payload.statuses,
-                following: action.payload.following,
-                messages: action.payload.messages,
-                sent_messages: action.payload.sent_messages.reverse()
+                reviews: action.payload.reviews
             }
         default:
             return state
@@ -93,6 +88,9 @@ let currentUserReducer = (state=initialState.currentUser, action) => {
 let selectedUserReducer = (state=initialState.selectedUser, action) => {
     switch (action.type) {
         case 'SELECTED_USER':
+            return action.payload
+        case 'ADD_HEART':
+            debugger
             return action.payload
         default:
             return state
@@ -109,13 +107,23 @@ let verificationsReducer = (state=initialState.verifications, action) => {
     }
 }
 
+let conversationsReducer = (state=initialState.conversations, action) => {
+    switch(action.type) {
+        case 'GET_CONVOS':
+            return action.payload
+        default:
+            return state
+    }
+}
+
 //combines all reducers into the root reducer
 let rootReducer = combineReducers({
     users: usersReducer,
     currentUser: currentUserReducer,
     searchQuery: searchQueryReducer,
     selectedUser: selectedUserReducer,
-    verifications: verificationsReducer
+    verifications: verificationsReducer,
+    conversations: conversationsReducer
 })
 
 export default rootReducer

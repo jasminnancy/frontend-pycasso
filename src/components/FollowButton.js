@@ -55,7 +55,9 @@ const Follow = (props) => {
 
         return (
             <div>
-                Followers: {followerCount} 
+                <div id='followerCount'>
+                    Followers: {followerCount} 
+                </div>
                 <br/><br/>
                 <Button onClick={followFetch} content='Follow' />
                 <br/><br/>
@@ -94,7 +96,9 @@ const Unfollow = (props) => {
     if (props.user && props.currentUser) {
         return (
             <div>
-                Followers: {followerCount} 
+                <div id='followerCount'>
+                    Followers: {followerCount}
+                </div>
                 <br/><br/>
                 <Button onClick={unfollowFetch} content='Unfollow' />
                 <br/><br/>

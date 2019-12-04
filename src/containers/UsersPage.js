@@ -19,8 +19,10 @@ class UsersPage extends Component {
     //second grid row is the conditional rendering
 
     changeHandler = (e) => {
+        let users = this.props.users.filter(user => user.id !== this.props.currentUser.user.id)
+
         if (e.currentTarget.id !== '') {
-            let filtered = this.props.users.filter(
+            let filtered = users.filter(
                 user => user.user_type === e.currentTarget.id
             )
             this.setState({
@@ -34,6 +36,8 @@ class UsersPage extends Component {
     }
 
     searchHandler = (e) => {
+        let users = this.props.users.filter(user => user.id !== this.props.currentUser.user.id)
+
         if (this.state.users.length > 0) {
             if (e.target.value !== '') {
                 let filtered = this.state.users.filter(user => {
@@ -45,12 +49,12 @@ class UsersPage extends Component {
                 })
             } else {
                 this.setState({
-                    users: [...this.props.users]
+                    users: users
                 })
             }
         } else {
             if (e.target.value !== '') {
-                let filtered = this.props.users.filter(user => {
+                let filtered = users.filter(user => {
                     return user.username.includes(e.target.value)
                 })
                 this.setState({
@@ -58,51 +62,55 @@ class UsersPage extends Component {
                 })
             } else {
                 this.setState({
-                    users: [...this.props.users]
+                    users: users
                 })
             }
         }
     }
 
     render() {
-        return (
-            <Grid container>
-                <Grid.Row>
-                    <Grid.Column width={4} verticalAlign='middle'>
-                        <Dropdown
-                            floating
-                            clearable
-                            closeOnEscape
-                            options={options}
-                            placeholder='Show Only:'
-                            onChange={(e) => this.changeHandler(e)}
-                        />
-                    </Grid.Column>
-                    <Grid.Column width={8}/>
-                    <Grid.Column width={4}>
-                        <Search
-                            showNoResults={false}
-                            onSearchChange={(e) => this.searchHandler(e)}
-                            placeholder='Search users'  
-                        />
-                    </Grid.Column>
-                </Grid.Row>
+        if (this.props.users) {
+            let users = this.props.users.filter(user => user.id !== this.props.currentUser.user.id)
+            
+            return (
+                <Grid container>
+                    <Grid.Row>
+                        <Grid.Column width={4} verticalAlign='middle'>
+                            <Dropdown
+                                floating
+                                clearable
+                                closeOnEscape
+                                options={options}
+                                placeholder='Show Only:'
+                                onChange={(e) => this.changeHandler(e)}
+                            />
+                        </Grid.Column>
+                        <Grid.Column width={8}/>
+                        <Grid.Column width={4}>
+                            <Search
+                                showNoResults={false}
+                                onSearchChange={(e) => this.searchHandler(e)}
+                                placeholder='Search users'  
+                            />
+                        </Grid.Column>
+                    </Grid.Row>
 
-                <Grid.Row columns={3}>
-                    {this.state.users.length > 0 
-                        ? this.state.users.map(user => 
-                            <ProfileCard 
-                                key={user.id} 
-                                user={user} 
-                            />)
-                            : this.props.users.map(user => 
-                                <ProfileCard
-                                    key={user.id}
-                                    user={user}
-                                />)}
-                </Grid.Row>
-            </Grid>
-        )
+                    <Grid.Row columns={3}>
+                        {this.state.users.length > 0 
+                            ? this.state.users.map(user =>
+                                <ProfileCard 
+                                    key={user.id} 
+                                    user={user} 
+                                />)
+                                : users.map(user => 
+                                    <ProfileCard
+                                        key={user.id}
+                                        user={user}
+                                    />)}
+                    </Grid.Row>
+                </Grid>
+            )
+        }
     }
 }
 
@@ -115,7 +123,8 @@ const options = [
 
 const mapStateToProps = (state) => {
     return {
-        users: state.users
+        users: state.users,
+        currentUser: state.currentUser
     }
 }
 

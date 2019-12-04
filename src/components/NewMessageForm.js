@@ -1,51 +1,29 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Segment, Form, Button, Header } from 'semantic-ui-react'
+import { Form, Button } from 'semantic-ui-react'
 
 class NewMessageForm extends Component {
     constructor() {
         super()
 
         this.state = {
-            body: '',
-            recipient_id: null,
-            options: [],
-            message: ''
+            body: ''
         }
-    }
-
-    componentDidMount() {
-        let users = this.props.users.filter(user => user.id !== this.props.currentUser.user.id)
-        let sortedUsers = users.sort((a, b) => a.username.localeCompare(b.username))
-        let options = []
-        
-        sortedUsers.map(user => {
-            let userObject = {id: user.id, text: user.username, value: user.id}
-            options.push(userObject)
-            return options
-        })
-
-        this.setState({
-            options: options
-        })
     }
 
     handleChange = (e) => {
-        if (e.target.id === 'body') {
-            this.setState({
-                body: e.target.value
-            })
-        } else {
-            this.setState({
-                recipient_id: e.target.id
-            })
-        }
+        this.setState({
+            body: e.target.value
+        })
     }
 
-    handleSubmit = (e, values) => {
+    handleSubmit = (e, body) => {
         e.preventDefault()
 
-        fetch('http://localhost:3000/messages', {
+        let otherUserID = this.props.conversation.second_user_id !== this.props.currentUser.user.id
+            ? this.props.conversation.second_user_id 
+                : this.props.conversation.first_user_id
+
+        fetch('http://localhost:3000/conversations',{
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,
@@ -53,77 +31,41 @@ class NewMessageForm extends Component {
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-                sender_id: this.props.currentUser.user.id,
-                recipient_id: Number.parseInt(values.recipient_id),
-                body: values.body
+                first_user_id: this.props.currentUser.user.id,
+                second_user_id: otherUserID,
+                body: body
             })
         })
         .then(r => r.json())
         .then(data => {
-            this.setState({
-                body: '',
-                message: data.message
-            })
-            this.props.handleSentMessage(data, this.props.currentUser)
+            let message = document.createElement('div')
+            message.innerText = 'Message sent'
+            message.style = 'color: black'
+            document.querySelector('#commentGroup').appendChild(message)
+        })
+
+        this.setState({
+            body: ''
         })
     }
 
     render() {
         return (
-            <Segment inverted padded='very'>
-                <Form 
-                    inverted
-                    widths='equal'
-                    onSubmit={(e) => this.handleSubmit(e, this.state)}
-                >
-                    <Form.Group>
-                        <Form.Select
-                        style={{backgroundColor: '#eeeeee'}}
-                            inline
-                            floating
-                            label='Recipient:'
-                            options={this.state.options}
-                            placeholder='Select User'
-                            onChange={(e) => this.handleChange(e)}
-                        />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.TextArea 
-                            style={{backgroundColor: '#eeeeee'}}
-                            id='body'
-                            label='Message'
-                            placeholder='Type your message here...'
-                            onChange={(e) => this.handleChange(e)}
-                        />
-                    </Form.Group>
-                    <Button type='submit' content='Send' />
-                    <Header size='tiny' color='red'>
-                        {this.state.message
-                            ? this.state.message
-                                : null}
-                    </Header>
-                </Form>
-            </Segment>
+            <Form onSubmit={(e) => this.handleSubmit(e, this.state.body)}>
+                <Form.TextArea 
+                    value={this.state.body}
+                    onChange={(e) => this.handleChange(e)} 
+                />
+                <Button 
+                    type='submit' 
+                    floated='right' 
+                    content='Reply' 
+                    labelPosition='right' 
+                    icon='pencil' 
+                />
+            </Form>
         )
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        users: state.users
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        handleSentMessage: (message, currentUser) => {
-            currentUser.sent_messages = [message.data, ...currentUser.sent_messages]
-            dispatch({
-                type: 'SENT_MESSAGE',
-                payload: currentUser
-            })
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewMessageForm)
+export default NewMessageForm

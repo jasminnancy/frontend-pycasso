@@ -1,12 +1,30 @@
 import React from 'react'
-// import Searchbar from '../components/Searchbar'
+import { connect } from 'react-redux'
+import FeedItem from '../components/FeedItem'
 
 const HomePage = (props) => {
-    return (
-        <div>
-            Home Page
-        </div>
-    )
+    if (props.users.length > 0) {
+        let masterFeed = []
+        props.users.map(user => 
+            user.statuses.map(status => 
+                masterFeed.push({status, user})))
+                
+        masterFeed = masterFeed.sort((a, b) => b.status.id - a.status.id)
+
+        return (
+            <div>
+                {masterFeed.map(item => <FeedItem key={item.id} item={item} />)}
+            </div>
+        )
+    } else {
+        return null
+    }
 }
 
-export default HomePage
+const mapStateToProps = (state) => {
+    return {
+        users: state.users
+    }
+}
+
+export default connect(mapStateToProps)(HomePage)
