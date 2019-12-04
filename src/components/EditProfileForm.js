@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Form, Button, Header } from 'semantic-ui-react'
+import { Form, Button, Header, Modal, Icon } from 'semantic-ui-react'
 
 class EditProfileForm extends Component {
     constructor() {
@@ -161,15 +161,33 @@ class EditProfileForm extends Component {
                             onClick={(e) => this.handleVerification(e, this.props.currentUser, this.props.verifications)}
                             content='Request Account Verification'
                         />}
-                
-                <Header 
-                    href='#'
+                <Modal 
+                    trigger={<Header 
+                                href='#'
+                                size='small'
+                                floated='right'
+                                color='blue'
+                                content='Delete Account'
+                            />} 
                     size='small'
-                    floated='right'
-                    color='blue'
-                    onClick={() => this.handleDelete(this.props.currentUser)}
-                    content='Delete Account'
-                />
+                >
+                    <Header icon='archive' content='Delete Your Account?' />
+                    <Modal.Content>
+                        <p style={{color: 'black'}}>
+                            If you delete your account, everything will be permanently 
+                            deleted and your account cannot be recovered. 
+                            Do you wish to proceed with deletion?
+                        </p>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button color='red' inverted onClick={() => window.location.href='/profile/edit'}>
+                            <Icon name='remove' /> No
+                        </Button>
+                        <Button color='green' inverted onClick={() => this.handleDelete(this.props.currentUser)}>
+                            <Icon name='checkmark' /> Yes
+                        </Button>
+                    </Modal.Actions>
+                </Modal>
             </Form>
         )
     }
