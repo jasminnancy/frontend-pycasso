@@ -1,67 +1,60 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Menu, Grid } from 'semantic-ui-react'
-import ReceivedMessages from './ReceivedMessages'
-import SentMessages from './SentMessages'
-import NewMessageForm from '../components/NewMessageForm'
+import Conversations from './Conversations'
+import NewConversationForm from '../components/NewConversationForm'
 
 class MessagesPage extends Component {
     constructor() {
         super()
 
         this.state = {
-            page: 'inbox'
+            page: 'conversations'
         }
     }
 
     render() {
-        let currentPage
+        if (this.props.currentUser.user.username) {
+            let currentPage
+            this.state.page === 'conversations'
+                ? currentPage = <Conversations 
+                                    currentUser={this.props.currentUser}
+                                />
+                    : currentPage = <NewConversationForm 
+                                        currentUser={this.props.currentUser} 
+                                        users={this.props.users} 
+                                    />
 
-        switch (this.state.page) {
-            case 'inbox':
-                currentPage = <ReceivedMessages messages={this.props.currentUser.messages.reverse()} />
-                break;
-            case 'outbox':
-                currentPage = <SentMessages messages={this.props.currentUser.sent_messages.reverse()} />
-                break;
-            case 'new':
-                currentPage = <NewMessageForm currentUser={this.props.currentUser} />
-                break;
-            default:
-                currentPage = <ReceivedMessages messages={this.props.currentUser.messages.reverse()} />
+            return (
+                <Grid stretched>
+                    <Menu tabular inverted widths={4} size='huge'>
+                        <Menu.Item 
+                            name='Conversations'
+                            active={this.state.page === 'conversations'}
+                            onClick={() => this.setState({page: 'conversations'})}
+                        />
+                        <Menu.Item 
+                            position='right'
+                            name='Create New Conversation'
+                            active={this.state.page === 'new'}
+                            onClick={() => this.setState({page: 'new'})}
+                        />
+                    </Menu>
+                    <Grid.Column width={16}>
+                        {currentPage}
+                    </Grid.Column>
+                </Grid>
+            )
+        } else {
+            return null
         }
-
-        return (
-            <Grid stretched>
-                <Menu tabular inverted widths={5} size='huge'>
-                    <Menu.Item 
-                        name='Inbox'
-                        active={this.state.page === 'inbox'}
-                        onClick={() => this.setState({page: 'inbox'})}
-                    />
-                    <Menu.Item 
-                        name='Outbox'
-                        active={this.state.page === 'outbox'}
-                        onClick={() => this.setState({page: 'outbox'})}
-                    />
-                    <Menu.Item 
-                        position='right'
-                        name='Compose Message'
-                        active={this.state.page === 'new'}
-                        onClick={() => this.setState({page: 'new'})}
-                    />
-                </Menu>
-                <Grid.Column width={16}>
-                    {currentPage}
-                </Grid.Column>
-            </Grid>
-        )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
+        users: state.users
     }
 }
 

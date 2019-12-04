@@ -95,7 +95,7 @@ class EditProfileForm extends Component {
         })
         .then(r => r.json())
         .then(data => {
-            localStorage.jwt = ''
+            localStorage.clear()
             window.location.href = "/login"
         })
     }

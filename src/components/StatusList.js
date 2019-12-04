@@ -5,10 +5,15 @@ import Status from './Status'
 
 const StatusList = (props) => {
     if (props.user.statuses && props.user.statuses.length !== 0) {
+        let user = props.selectedUser.length > 0 ? props.selectedUser : props.user
+        let statuses = user.statuses.sort((a, b) => b.id - a.id)
+
         return(
             <div>
-                {props.user.statuses.reverse().map(status => 
+                {statuses.map(status => 
                     <Status 
+                        selectedUser={props.selectedUser}
+                        currentUser={props.currentUser.user}
                         user={props.user}
                         status={status} 
                         key={status.id}/>)
@@ -26,6 +31,7 @@ const StatusList = (props) => {
 
 const mapStateToProps = (state) => {
     return {
+        currentUser: state.currentUser,
         selectedUser: state.selectedUser
     }
 }

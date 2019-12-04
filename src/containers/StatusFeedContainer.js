@@ -4,7 +4,7 @@ import StatusForm from '../components/StatusForm'
 import StatusList from '../components/StatusList'
 
 const StatusFeedContainer = (props) => {
-    if (props.user.id === props.currentUser.id) {
+    if (window.location.pathname === '/profile') {
         return (
             <div>
                 <StatusForm />
