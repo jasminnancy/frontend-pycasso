@@ -1,5 +1,6 @@
 import React from 'react'
 import { Comment, Divider } from 'semantic-ui-react'
+import profilePic from '../photos/profilePic.png'
 
 const Message = (props) => {
     let created = props.message.created_at
@@ -51,8 +52,8 @@ const Message = (props) => {
 
     return (
         <Comment>
+            <Comment.Avatar src={sender.profile_pic ? sender.profile_pic : profilePic} />
             <Comment.Content>
-                {/* <Comment.Avatar src={null} /> */}
                 <Comment.Author 
                     as='a' 
                     onClick={() => window.location.href = url}>

@@ -43,6 +43,10 @@ const Status = (props) => {
     }
 
     const handleDelete = (status) => {
+        let component = document.querySelector(`#component${status.id}`)
+        component.innerHTML = ''
+        component.className = ''
+
         fetch(`http://localhost:3000/statuses/${status.id}`, {
             method: 'DELETE',
             headers: {
@@ -58,7 +62,7 @@ const Status = (props) => {
     }
 
     return (
-        <Segment.Group size='small'>
+        <Segment.Group size='small' id={`component${props.status.id}`}>
             <Segment inverted>
                 <Grid>
                     <Grid.Column width={10} textAlign='left'>

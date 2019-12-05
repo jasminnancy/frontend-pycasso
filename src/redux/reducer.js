@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+
 //initial store state
 let initialState = {
     users: [],
@@ -15,9 +16,11 @@ let initialState = {
     },
     selectedUser: [],
     verifications: [],
-    conversations: []
+    conversations: [],
+    reviews: []
 }
 
+//reducer for getting all users
 let usersReducer = (state=initialState.users, action) => {
     switch(action.type) {
         case 'ADD_USERS':
@@ -129,9 +132,20 @@ let verificationsReducer = (state=initialState.verifications, action) => {
     }
 }
 
+//reducer for getting conversations
 let conversationsReducer = (state=initialState.conversations, action) => {
     switch(action.type) {
         case 'GET_CONVOS':
+            return action.payload
+        default:
+            return state
+    }
+}
+
+//reducer for getting all reviews
+let reviewsReducer = (state=initialState.reviews, action) => {
+    switch(action.type) {
+        case 'GET_REVIEWS':
             return action.payload
         default:
             return state
@@ -145,7 +159,8 @@ let rootReducer = combineReducers({
     searchQuery: searchQueryReducer,
     selectedUser: selectedUserReducer,
     verifications: verificationsReducer,
-    conversations: conversationsReducer
+    conversations: conversationsReducer,
+    reviews: reviewsReducer
 })
 
 export default rootReducer

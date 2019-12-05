@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import FeedItem from '../components/FeedItem'
 
 const HomePage = (props) => {
-    if (props.users.length > 0) {
+    if (props.users.length > 0 && props.reviews.length > 0) {
         let masterFeed = []
         props.users.map(user => 
             user.statuses.map(status => 
@@ -13,7 +13,7 @@ const HomePage = (props) => {
 
         return (
             <div>
-                {masterFeed.map(item => <FeedItem key={item.id} item={item} />)}
+                {masterFeed.map(item => <FeedItem key={item.status.id} item={item} />)}
             </div>
         )
     } else {
@@ -23,7 +23,8 @@ const HomePage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.users
+        users: state.users,
+        reviews: state.reviews
     }
 }
 

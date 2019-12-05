@@ -1,5 +1,6 @@
 import React from 'react'
-import { Segment, Grid, Header } from 'semantic-ui-react'
+import { Segment, Grid, Header, Image } from 'semantic-ui-react'
+import profilePic from '../photos/profilePic.png'
 
 const FeedItem = (props) => {
     let created = props.item.status.created_at
@@ -16,7 +17,10 @@ const FeedItem = (props) => {
     return (
         <Segment inverted>
             <Grid>
-                <Grid.Column width={5} verticalAlign='bottom'>
+                <Grid.Column width={2}>
+                    <Image inline src={props.item.user.profile_pic ? props.item.user.profile_pic : profilePic} />
+                </Grid.Column>
+                <Grid.Column width={4} textAlign='left'>
                     <Grid.Row >
                         <Header as='h2'>
                             <a href={`/user/${props.item.user.username}`}>{props.item.user.username}</a>
@@ -26,7 +30,7 @@ const FeedItem = (props) => {
                         {formattedDate} at {formattedTime}
                     </Grid.Row>
                 </Grid.Column>
-                <Grid.Column width={10} textAlign='left'>
+                <Grid.Column width={9} textAlign='left'>
                     {props.item.status.content}
                 </Grid.Column>
             </Grid>

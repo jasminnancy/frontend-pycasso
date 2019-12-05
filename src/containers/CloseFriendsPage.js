@@ -10,7 +10,7 @@ const CloseFriendsPage = (props) => {
                 <Segment inverted padded='very'>
                             Close friends are generally people you have worked with in the past. <br/><br/>
                             <b>Note:</b> In order to add close friends, you must first start a conversation with someone and leave them a review.
-                        </Segment>
+                        </Segment><br/>
                 {props.currentUser.close_friends.length > 0
                     ? props.currentUser.close_friends.map(friend => {
                         let user = props.users.filter(user => 

@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Form, Button, Header, Modal, Icon } from 'semantic-ui-react'
+import PhotoUpload from './PhotoUpload'
 
+// Allows logged-in user to edit their own profile information
 class EditProfileForm extends Component {
     constructor() {
         super()
@@ -16,6 +18,7 @@ class EditProfileForm extends Component {
         }
     }
 
+    //fetches to see if the user's account is verified or not
     componentDidMount() {
         fetch('http://localhost:3000/verifications', {
             headers: {
@@ -28,12 +31,14 @@ class EditProfileForm extends Component {
         .then(data => this.props.getRequests(data))
     }
 
+    //handles state change
     changeHandler = (e) => {
         this.setState({
             [e.target.id]: e.target.value
         })
     }
 
+    //updates the user's profile and redirects the user back to their profile page
     submitHandler = (e, values, user) => {
         e.preventDefault()
 
@@ -59,6 +64,7 @@ class EditProfileForm extends Component {
         }
     }
 
+    //conditionally displays verification status/pending request alert
     handleVerification = (e, user, verifications) => {
         e.preventDefault()
 
@@ -80,10 +86,11 @@ class EditProfileForm extends Component {
                 })
             })
             .then(r => r.json())
-            .then(console.log)
+            .then()
         }
     }
 
+    //deletes the account permanently, clears the jwt token, and redirects the user back to the login page
     handleDelete = (user) => {
         fetch(`http://localhost:3000/users/${user.id}`, {
             method: 'DELETE',
@@ -107,6 +114,10 @@ class EditProfileForm extends Component {
                 onChange={(e) => this.changeHandler(e)}
                 onSubmit={(e) => this.submitHandler(e, this.state, this.props.currentUser)}
             >                
+                <Form.Group width={16}>
+                    <PhotoUpload currentUser={this.props.currentUser} /><br/>
+                </Form.Group>
+
                 <Form.Group widths='equal'>
                     <Form.Input
                         id='first_name'
