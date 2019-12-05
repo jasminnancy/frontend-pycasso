@@ -6,19 +6,19 @@ import profilePic from '../photos/profilePic.png'
 const ProfileCard = (props) => {
     return (
         <Grid.Column>
-            <Card link style={{marginBottom: 25, padding: 10, background: '#1b1c1d'}}>
-                <Link to={`/users/${props.user.username}`}>
+            <Card link style={{marginBottom: 25, padding: 10, backgroundColor: '#eeeeee'}}>
+                <Link to={`/users/${props.user.username}`} style={{color: 'black'}}>
                     <Card.Content>
                         <Image size='small' src={props.user.profile_pic
                             ? props.user.profile_pic
                                 : profilePic} />
-                        <Card.Header as='h3' style={{color: 'white'}}>
+                        <Card.Header as='h3'>
                             {props.user.verified 
                                 ? <Icon color='green' name='check circle'/> 
                                     : null}
                             {props.user.username}
                         </Card.Header>
-                        <Card.Meta style={{color: 'white'}}>
+                        <Card.Meta>
                             {props.user.user_type} | {props.user.rating 
                                 ? props.user.rating + '/5' 
                                     : 'Unrated'}

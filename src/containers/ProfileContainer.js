@@ -5,10 +5,11 @@ import StatusFeedContainer from './StatusFeedContainer'
 
 const ProfileContainer = (props) => {
     if (window.location.pathname === '/profile') {
+        let userFix = props.user.username ? props.user : props.user.user
         return (
             <div>
-                <FeaturedPhotos user={props.user} /><br/><br/>
-                <StatusFeedContainer user={props.user} />
+                <FeaturedPhotos user={userFix} /><br/><br/>
+                <StatusFeedContainer user={userFix} />
             </div>
         )
     } else if (window.location.pathname === `/users/${props.selectedUser.username}`) {

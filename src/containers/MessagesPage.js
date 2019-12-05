@@ -31,7 +31,7 @@ class MessagesPage extends Component {
                         <Menu.Item 
                             name='Conversations'
                             active={this.state.page === 'conversations'}
-                            onClick={() => this.setState({page: 'conversations'})}
+                            onClick={() => this.setState({page: 'conversations'}, () => window.location.reload())}
                         />
                         <Menu.Item 
                             position='right'

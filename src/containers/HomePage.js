@@ -13,7 +13,7 @@ const HomePage = (props) => {
 
         return (
             <div>
-                {masterFeed.map(item => <FeedItem key={item.id} item={item} />)}
+                {masterFeed.map(item => <FeedItem key={item.status.id} item={item} />)}
             </div>
         )
     } else {
