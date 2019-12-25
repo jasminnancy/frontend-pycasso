@@ -1,5 +1,6 @@
 import React from 'react'
-import { Image, Segment, Grid } from 'semantic-ui-react'
+import { Segment, Grid } from 'semantic-ui-react'
+import PortfolioPhoto from '../components/PortfolioPhoto'
 
 const PhotoContainer = (props) => {
     if (props.photos && props.photos.length > 0) {
@@ -7,9 +8,7 @@ const PhotoContainer = (props) => {
             <Grid>
                 <Grid.Row columns={3}>
                     {props.photos.map(photo =>
-                        <Grid.Column style={{marginBottom: 30}}>
-                            <Image size='medium' src={photo.url} />
-                        </Grid.Column>
+                        <PortfolioPhoto key={photo.id} photo={photo} />
                     )}
                 </Grid.Row>
             </Grid>

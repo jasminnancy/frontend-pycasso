@@ -53,3 +53,8 @@
 .sidebar {
   clear: both;
 }
+
+.squarePhoto {
+  max-height: 175px;
+  max-width: 175px;
+}

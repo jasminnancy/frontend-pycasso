@@ -91,11 +91,11 @@ const Sidebar = (props) => {
                                 ? <p style={{color: 'black'}}>This user has no reviews</p>
                                     : null}
                             {props.user.reviews.reverse().map(review => 
-                                <Review key={review.id} review={review} />
-                            )}
+                                    <Review key={review.id} review={review} />
+                                )}
                         </Modal.Content>
                     </Modal><br/><br/>
-                    {conversations.length > 0
+                    {conversations.length > 0 && props.user.id !== userFix.id
                         ? <AddReviewModal 
                             user={props.user}
                             currentUser={props.currentUser}
@@ -135,6 +135,7 @@ const mapDispatchToProps = (dispatch) => {
                 type: 'UNFOLLOW',
                 payload: currentUser
             })
+
 
             let number = parseInt(document.querySelector('#followerCount').innerText.split(' ')[1]) - 1
             document.querySelector('#followerCount').innerText = `Followers: ${number}`

@@ -28,7 +28,7 @@ const FollowButton = (props) => {
 
 const Follow = (props) => {
     let followerCount = props.user.followers.length
-
+    
     const followFetch = () => {
         fetch('http://localhost:3000/follows', {
             method: 'POST',
@@ -43,9 +43,7 @@ const Follow = (props) => {
             })
         })
         .then(r => r.json())
-        .then(data => {
-            props.handleFollow(props.user, props.currentUser)
-        })
+        .then(props.handleFollow(props.user, props.currentUser))
     }
 
     if (props.user && props.currentUser) {
@@ -73,7 +71,7 @@ const Follow = (props) => {
 
 const Unfollow = (props) => {
     let followerCount = props.user.followers.length
-
+    
     const unfollowFetch = () => {
         fetch('http://localhost:3000/find', {
             method: 'POST',

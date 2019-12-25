@@ -18,12 +18,14 @@ const FeedItem = (props) => {
         <Segment inverted>
             <Grid>
                 <Grid.Column width={2}>
-                    <Image inline src={props.item.user.profile_pic ? props.item.user.profile_pic : profilePic} />
+                    <Image className='squarePhoto' inline src={props.item.user.profile_pic 
+                        ? props.item.user.profile_pic 
+                            : profilePic} />
                 </Grid.Column>
                 <Grid.Column width={4} textAlign='left'>
                     <Grid.Row >
                         <Header as='h2'>
-                            <a href={`/user/${props.item.user.username}`}>{props.item.user.username}</a>
+                            <a href={`/users/${props.item.user.username}`}>{props.item.user.username}</a>
                         </Header>
                     </Grid.Row><br/>
                     <Grid.Row>

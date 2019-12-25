@@ -9,7 +9,7 @@ const ProfileCard = (props) => {
             <Card link style={{marginBottom: 25, padding: 10, backgroundColor: '#eeeeee'}}>
                 <Link to={`/users/${props.user.username}`} style={{color: 'black'}}>
                     <Card.Content>
-                        <Image size='small' src={props.user.profile_pic
+                        <Image className='squarePhoto'  src={props.user.profile_pic
                             ? props.user.profile_pic
                                 : profilePic} />
                         <Card.Header as='h3'>

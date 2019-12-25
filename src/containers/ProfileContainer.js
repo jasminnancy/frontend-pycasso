@@ -15,7 +15,7 @@ const ProfileContainer = (props) => {
     } else if (window.location.pathname === `/users/${props.selectedUser.username}`) {
         return (
             <div>
-                <FeaturedPhotos user={props.user} /><br/><br/>
+                <FeaturedPhotos user={props.selectedUser} /><br/><br/>
                 <StatusFeedContainer user={props.selectedUser}/>
             </div>
         )

@@ -122,13 +122,7 @@ const mapDispatchToProps = (dispatch) => {
                 ? selectedUser = user
                     : selectedUser = user.user
             let statusIndex = selectedUser.statuses.findIndex(status => status.id === editedStatus.id)
-            debugger
             selectedUser.statuses = Object.assign([], selectedUser.statuses, {[statusIndex]: editedStatus}).reverse()
-
-            // dispatch({
-            //     type: 'ADD_HEART',
-            //     payload: selectedUser
-            // })
         }
     }
 }
