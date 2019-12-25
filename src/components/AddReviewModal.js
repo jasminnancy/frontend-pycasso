@@ -39,7 +39,7 @@ class AddReviewModal extends Component {
         e.preventDefault()
 
         if (this.state.rating) {
-            fetch('http://localhost:3000/reviews', {
+            fetch('https://pycasso-backend.herokuapp.com/reviews', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.jwt}`,

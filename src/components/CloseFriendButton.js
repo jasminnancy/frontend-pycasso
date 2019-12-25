@@ -32,7 +32,7 @@ const CloseFriendButton = (props) => {
 // Add friend button
 const AddFriend = (props) => {
     const addFriendFetch = () => {
-        fetch('http://localhost:3000//close_friends', {
+        fetch('https://pycasso-backend.herokuapp.com/close_friends', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,
@@ -67,7 +67,7 @@ const AddFriend = (props) => {
 // remove friend button
 const RemoveFriend = (props) => {
     const removeFriendFetch = () => {
-        fetch('http://localhost:3000/remove', {
+        fetch('https://pycasso-backend.herokuapp.com/remove', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,

@@ -20,7 +20,7 @@ class EditProfileForm extends Component {
 
     //fetches to see if the user's account is verified or not
     componentDidMount() {
-        fetch('http://localhost:3000/verifications', {
+        fetch('https://pycasso-backend.herokuapp.com/verifications', {
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,
                 'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ class EditProfileForm extends Component {
         }
 
         if (values.password === values.confirmpass) {
-            fetch(`http://localhost:3000/users/${user.id}`, {
+            fetch(`https://pycasso-backend.herokuapp.com/users/${user.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${localStorage.jwt}`,
@@ -74,7 +74,7 @@ class EditProfileForm extends Component {
         if (pendingRequest.length > 0) {
             alert("Your prior request is still pending.")
         } else {
-            fetch('http://localhost:3000/verifications', {
+            fetch('https://pycasso-backend.herokuapp.com/verifications', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.jwt}`,
@@ -92,7 +92,7 @@ class EditProfileForm extends Component {
 
     //deletes the account permanently, clears the jwt token, and redirects the user back to the login page
     handleDelete = (user) => {
-        fetch(`http://localhost:3000/users/${user.id}`, {
+        fetch(`https://pycasso-backend.herokuapp.com/users/${user.id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,

@@ -17,7 +17,7 @@ const Status = (props) => {
     const selectedUser = props.selectedUser.length > 0 ? props.selectedUser : props.user
 
     const handleHeartClick = (status) => {
-        fetch(`http://localhost:3000/statuses/${status.id}`, {
+        fetch(`https://pycasso-backend.herokuapp.com/statuses/${status.id}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,
@@ -47,7 +47,7 @@ const Status = (props) => {
         component.innerHTML = ''
         component.className = ''
 
-        fetch(`http://localhost:3000/statuses/${status.id}`, {
+        fetch(`https://pycasso-backend.herokuapp.com/statuses/${status.id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,

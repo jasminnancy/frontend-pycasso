@@ -9,7 +9,7 @@ const PhotoUpload = (props) => {
         reader.addEventListener("load", function () {
             let base64 = reader.result
 
-            fetch('http://localhost:3000/upload', {
+            fetch('https://pycasso-backend.herokuapp.com/upload', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.jwt}`,

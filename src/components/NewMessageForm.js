@@ -23,7 +23,7 @@ class NewMessageForm extends Component {
             ? this.props.conversation.second_user_id 
                 : this.props.conversation.first_user_id
 
-        fetch('http://localhost:3000/conversations',{
+        fetch('https://pycasso-backend.herokuapp.com/conversations',{
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,

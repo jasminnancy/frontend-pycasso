@@ -20,7 +20,7 @@ class LoginForm extends Component {
     handleLogin = (e, values) => {
         e.preventDefault()
         
-        fetch('http://localhost:3000/login', {
+        fetch('https://pycasso-backend.herokuapp.com/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

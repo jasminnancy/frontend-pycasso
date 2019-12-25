@@ -19,7 +19,7 @@ class StatusForm extends Component {
     handleSubmit = (e, values) => {
         e.preventDefault()
 
-        fetch('http://localhost:3000/statuses', {
+        fetch('https://pycasso-backend.herokuapp.com/statuses', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,

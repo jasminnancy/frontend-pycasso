@@ -43,7 +43,7 @@ class NewConversationForm extends Component {
     handleSubmit = (e, values) => {
         e.preventDefault()
 
-        fetch('http://localhost:3000/conversations', {
+        fetch('https://pycasso-backend.herokuapp.com/conversations', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,

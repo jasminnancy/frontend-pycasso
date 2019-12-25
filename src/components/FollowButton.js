@@ -30,7 +30,7 @@ const Follow = (props) => {
     let followerCount = props.user.followers.length
     
     const followFetch = () => {
-        fetch('http://localhost:3000/follows', {
+        fetch('https://pycasso-backend.herokuapp.com/follows', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,
@@ -73,7 +73,7 @@ const Unfollow = (props) => {
     let followerCount = props.user.followers.length
     
     const unfollowFetch = () => {
-        fetch('http://localhost:3000/find', {
+        fetch('https://pycasso-backend.herokuapp.com/find', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,

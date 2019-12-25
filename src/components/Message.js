@@ -35,7 +35,7 @@ const Message = (props) => {
 
             console.log(props)
     if (props.message.user_id !== props.currentUser.user.id && props.message.read === false) {
-        fetch(`http://localhost:3000/messages/${props.message.id}`, {
+        fetch(`https://pycasso-backend.herokuapp.com/messages/${props.message.id}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,

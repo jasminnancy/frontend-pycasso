@@ -38,7 +38,7 @@ class SignupForm extends Component {
                 user_type: values.userType
             }
 
-            fetch('http://localhost:3000/users', {
+            fetch('https://pycasso-backend.herokuapp.com/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

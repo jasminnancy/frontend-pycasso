@@ -19,7 +19,7 @@ const FeaturePhoto = (props) => {
         reader.addEventListener("load", function () {
             let base64 = reader.result
 
-            fetch('http://localhost:3000/featured', {
+            fetch('https://pycasso-backend.herokuapp.com/featured', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.jwt}`,

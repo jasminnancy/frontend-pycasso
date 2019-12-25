@@ -23,7 +23,7 @@ class PortfolioPhoto extends Component {
     }
 
     handleClick = (photo) => {
-        fetch(`http://localhost:3000/photos/${photo.id}`, {
+        fetch(`https://pycasso-backend.herokuapp.com/photos/${photo.id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${localStorage.jwt}`,
