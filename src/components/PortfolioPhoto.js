@@ -23,7 +23,16 @@ class PortfolioPhoto extends Component {
     }
 
     handleClick = (photo) => {
-        console.log(photo)
+        fetch(`http://localhost:3000/photos/${photo.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.jwt}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(r => r.json())
+        .then(() => window.location.reload())
     }
 
     render() {

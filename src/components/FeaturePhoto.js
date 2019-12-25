@@ -12,8 +12,6 @@ const FeaturePhoto = (props) => {
         photo = props.currentUser.feature_three
     }
 
-    debugger
-
     const previewFile = () => {
         var file    = document.querySelector('input[type=file]').files[0];
         var reader  = new FileReader();
