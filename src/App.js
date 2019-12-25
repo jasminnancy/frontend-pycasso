@@ -16,7 +16,7 @@ import MessagesPage from './containers/MessagesPage'
 class App extends Component {
   componentDidMount() {
     if (localStorage.jwt) {
-      fetch('http://localhost:3000/profile', {
+      fetch('https://pycasso-backend.herokuapp.com/profile', {
         headers: {
             'Authorization': `Bearer ${localStorage.jwt}`,
             'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ class App extends Component {
         this.props.loggedIn(data.user)
       })
 
-      fetch('http://localhost:3000/users', {
+      fetch('https://pycasso-backend.herokuapp.com/users', {
         headers: {
           'Authorization': `Bearer ${localStorage.jwt}`,
           'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ class App extends Component {
         this.props.getUsers(data)
       })
 
-      fetch('http://localhost:3000/reviews', {
+      fetch('https://pycasso-backend.herokuapp.com/reviews', {
         headers: {
           'Authorization': `Bearer ${localStorage.jwt}`,
           'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ class App extends Component {
 
   render() {
     if (this.props.currentUser.user.username) {
-      fetch('http://localhost:3000/getConvos', {
+      fetch('https://pycasso-backend.herokuapp.com/getConvos', {
           method: 'POST',
           headers: {
               'Authorization': `Bearer ${localStorage.jwt}`,

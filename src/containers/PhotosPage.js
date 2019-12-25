@@ -13,7 +13,7 @@ class PhotosPage extends Component {
 
     render() {
         if (this.props.currentUser.user.username && this.state.photos === null) {
-            fetch('http://localhost:3000/photos', {
+            fetch('https://pycasso-backend.herokuapp.com/photos', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.jwt}`,
